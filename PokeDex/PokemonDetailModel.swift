@@ -10,8 +10,20 @@ import Foundation
 import UIKit
 import Kingfisher
 
-struct PokemonDetailModel {
-  var name: String
-  //let image: UIImage
-  var type: String
+struct Pokemon {
+  var nameData: String
+  var typeData: String?
+  var imageURL: URL?
+  var heightData: String?
+  var weightData: String?
+  var weaknessData: String?
+  var ev1: URL?
+  var ev2: URL?
+  var nextEVLabelText: String?
+  var ev1Name: String?
+  var ev2Name: String?
+  
+  init(name: String) {
+    self.nameData = name
+  }
 }

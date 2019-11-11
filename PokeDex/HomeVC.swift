@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class HomeVC: UIViewController {
+class HomeVC: UIViewController,UIPopoverPresentationControllerDelegate {
   
   //MARK: - IBOutlets
   @IBOutlet weak var pokeCollectionView: UICollectionView!
@@ -18,7 +18,6 @@ class HomeVC: UIViewController {
   let pokemonURL = URL(string: "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json")
   var pokemonData = [DataStruct]()
   let spacing:CGFloat = 16.0
-  
   var tuple = [(name: String,
                 image: URL,
                 type: String,
@@ -27,6 +26,9 @@ class HomeVC: UIViewController {
                 weakness: String,
                 num:String,
     next_evolution: [DataStruct2]?)]()
+  var selectedIndex: IndexPath?
+  
+  var filePresenting = PresentingAnimator()
   
   //MARK: - Lifecycle Functions
   override func viewDidLoad() {
@@ -121,77 +123,100 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource,UICollect
     }
   }
   
-  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+  func collectionView(_ collectionView: UICollectionView,
+                      didSelectItemAt indexPath: IndexPath) {
     if let detailsVC = storyboard?.instantiateViewController(identifier: "DetailsVC") as? DetailsVC {
-      detailsVC.modalPresentationStyle = .overFullScreen
-      detailsVC.nameData = tuple[indexPath.row].name
-      detailsVC.typeData = tuple[indexPath.row].type
-      detailsVC.imageURL = tuple[indexPath.row].image
-      detailsVC.heightData = tuple[indexPath.row].height
-      detailsVC.weaknessData = tuple[indexPath.row].weakness
-      detailsVC.weightData = tuple[indexPath.row].weight
+      selectedIndex = indexPath
+      
+      detailsVC.modalPresentationStyle = .overCurrentContext
+      detailsVC.transitioningDelegate = filePresenting
+
+      let tuppleObj = tuple[indexPath.row]
+      var pokemon = Pokemon(name: tuppleObj.name)
+      pokemon.typeData = tuppleObj.type
+      pokemon.heightData = tuppleObj.height
+      pokemon.imageURL = tuppleObj.image
+      pokemon.weightData = tuppleObj.weight
+      detailsVC.pokemonDetail = pokemon
       for i in 0..<tuple.count {
         if tuple[indexPath.row].next_evolution?.count == 2 {
-          if tuple[i].num  == tuple[indexPath.row].next_evolution?[0].num {
-            detailsVC.ev1 = tuple[i].image
-            detailsVC.ev1Name = tuple[i].name
-            detailsVC.nextEVLabelText = "Next Evoution"
+          if tuple[i].num  == tuple[indexPath.row].next_evolution?.first?.num {
+            detailsVC.pokemonDetail.ev1 = tuple[i].image
+            detailsVC.pokemonDetail.ev1Name = tuple[i].name
+            detailsVC.pokemonDetail.nextEVLabelText = "Next Evoution"
           }
-          if tuple[i].num  == tuple[indexPath.row].next_evolution?[1].num {
-            detailsVC.ev2 = tuple[i].image
-            detailsVC.ev2Name = tuple[i].name
+          if tuple[i].num  == tuple[indexPath.row].next_evolution?.last?.num {
+            detailsVC.pokemonDetail.ev2 = tuple[i].image
+            detailsVC.pokemonDetail.ev2Name = tuple[i].name
 
           }
         } else {
-          if tuple[i].num  == tuple[indexPath.row].next_evolution?[0].num {
-            detailsVC.ev1 = tuple[i].image
-            detailsVC.ev1Name = tuple[i].name
-            detailsVC.nextEVLabelText = "Next Evoution"
+          if tuple[i].num  == tuple[indexPath.row].next_evolution?.first?.num {
+            detailsVC.pokemonDetail.ev1 = tuple[i].image
+            detailsVC.pokemonDetail.ev1Name = tuple[i].name
+            detailsVC.pokemonDetail.nextEVLabelText = "Next Evoution"
 
           }
         }
       }
       if tuple[indexPath.row].next_evolution == nil {
-        detailsVC.nextEVLabelText = "No More Evoution"
+        detailsVC.pokemonDetail.nextEVLabelText = "No More Evoution"
       }
-      present(detailsVC, animated: true, completion: nil)
+      UIView.animate(withDuration: 1) {
+        self.present(detailsVC, animated: true, completion: nil)
+      }
+      
     }
   }
 }
 
 
 extension HomeVC: UIViewControllerPreviewingDelegate {
-  func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-    guard let indexPath = pokeCollectionView?.indexPathForItem(at: location) else { return nil}
+  func previewingContext(_ previewingContext: UIViewControllerPreviewing,
+                         viewControllerForLocation location: CGPoint)
+                         -> UIViewController? {
+    guard let indexPath = pokeCollectionView?
+                          .indexPathForItem(at: location) else { return nil}
     
-    guard let cell = pokeCollectionView?.cellForItem(at: indexPath) as? PokemonCollectionViewCell else { return nil}
+    guard let cell = pokeCollectionView?.cellForItem(at: indexPath)
+                     as? PokemonCollectionViewCell else { return nil}
     
-    if let detailsVC =  storyboard?.instantiateViewController(identifier: "DetailsVC") as? DetailsVC {
+    if let detailsVC = storyboard?.instantiateViewController(identifier: "DetailsVC")
+                       as? DetailsVC {
       detailsVC.modalPresentationStyle = .overFullScreen
-      detailsVC.nameData = tuple[indexPath.row].name
-      detailsVC.typeData = tuple[indexPath.row].type
-      detailsVC.imageURL = tuple[indexPath.row].image
-      detailsVC.heightData = tuple[indexPath.row].height
-      detailsVC.weaknessData = tuple[indexPath.row].weakness
-      detailsVC.weightData = tuple[indexPath.row].weight
+      let tuppleObj = tuple[indexPath.row]
+      
+      var pokemon = Pokemon(name: tuppleObj.name)
+      detailsVC.pokemonDetail = Pokemon(name: tuppleObj.name)
+      pokemon.typeData = tuppleObj.type
+      pokemon.heightData = tuppleObj.height
+      pokemon.weightData = tuppleObj.weight
+      pokemon.imageURL = tuppleObj.image
+      detailsVC.pokemonDetail = pokemon
+      
       for i in 0..<tuple.count {
         if tuple[indexPath.row].next_evolution?.count == 2 {
           if tuple[i].num  == tuple[indexPath.row].next_evolution?[0].num {
-            detailsVC.ev1 = tuple[i].image
-            detailsVC.ev1Name = tuple[i].name
+            detailsVC.pokemonDetail.ev1 = tuple[i].image
+            detailsVC.pokemonDetail.ev1Name = tuple[i].name
+            detailsVC.pokemonDetail.nextEVLabelText = "Next Evoution"
           }
           if tuple[i].num  == tuple[indexPath.row].next_evolution?[1].num {
-            detailsVC.ev2 = tuple[i].image
-            detailsVC.ev2Name = tuple[i].name          }
+            detailsVC.pokemonDetail.ev2 = tuple[i].image
+            detailsVC.pokemonDetail.ev2Name = tuple[i].name
+
+          }
         } else {
           if tuple[i].num  == tuple[indexPath.row].next_evolution?[0].num {
-            detailsVC.ev1 = tuple[i].image
-            detailsVC.ev1Name = tuple[i].name
+            detailsVC.pokemonDetail.ev1 = tuple[i].image
+            detailsVC.pokemonDetail.ev1Name = tuple[i].name
+            detailsVC.pokemonDetail.nextEVLabelText = "Next Evoution"
+
           }
         }
       }
       if tuple[indexPath.row].next_evolution == nil {
-        detailsVC.nextEVLabelText = "No More Evoution"
+        detailsVC.pokemonDetail.nextEVLabelText = "No More Evoution"
       }
       detailsVC.preferredContentSize = (detailsVC.view.frame.size)
       previewingContext.sourceRect = cell.frame
@@ -203,5 +228,9 @@ extension HomeVC: UIViewControllerPreviewingDelegate {
   
   func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
     show(viewControllerToCommit, sender: self)
+  }
+  
+  func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+    .none
   }
 }

@@ -11,7 +11,7 @@ import Kingfisher
 
 class DetailsVC: UIViewController {
   
- // var pokemonDetail: PokemonDetailModel!
+  var pokemonDetail: Pokemon!
   
   @IBOutlet weak var name: UILabel!
   @IBOutlet weak var type: UILabel!
@@ -25,44 +25,28 @@ class DetailsVC: UIViewController {
   @IBOutlet weak var ev1Label: UILabel!
   @IBOutlet weak var ev2Label: UILabel!
   @IBOutlet weak var mainStackView: UIStackView!
+  @IBOutlet weak var upperStackView: UIStackView!
+  @IBOutlet weak var middleStackView: UIStackView!
   @IBOutlet weak var mainImageWidth: NSLayoutConstraint!
-  
-  var nameData: String?
-  var typeData: String?
-  var imageURL: URL?
-  var heightData: String?
-  var weightData: String?
-  var weaknessData: String?
-  var ev1: URL?
-  var ev2: URL?
-  var nextEVLabelText: String?
-  var ev1Name: String?
-  var ev2Name: String?
   
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view.
-
-    
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-//    name.text = pokemonDetail.name
-//    type.text = pokemonDetail.type
-    name.text = nameData
-    type.text = typeData
-    pokemonImage.kf.setImage(with: imageURL)
-    weakness.text = weaknessData
-    height.text = heightData
-    weight.text = weightData
-    EV1.kf.setImage(with: ev1)
-    EV2.kf.setImage(with: ev2)
-    nextEVLabel.text = nextEVLabelText
-    mainImageWidth.constant = self.view.frame.width*0.5
-    ev1Label.text = ev1Name
-    ev2Label.text = ev2Name
-    mainStackView.spacing = (self.view.frame.height - mainStackView.frame.maxY)*0.4
-
+    name.text = pokemonDetail.nameData
+     type.text = pokemonDetail.typeData
+     pokemonImage.kf.setImage(with: pokemonDetail.imageURL)
+     weakness.text = pokemonDetail.weaknessData
+     height.text = pokemonDetail.heightData
+     weight.text = pokemonDetail.weightData
+     EV1.kf.setImage(with: pokemonDetail.ev1)
+     EV2.kf.setImage(with: pokemonDetail.ev2)
+     nextEVLabel.text = pokemonDetail.nextEVLabelText
+     mainImageWidth.constant = self.view.frame.width*0.5
+     ev1Label.text = pokemonDetail.ev1Name
+     ev2Label.text = pokemonDetail.ev2Name
+     mainStackView.spacing = (self.view.frame.height - mainStackView.frame.maxY)*0.4
+    upperStackView.spacing = (self.view.frame.height - mainStackView.frame.maxY)*0.1
+    middleStackView.spacing = (self.view.frame.height - mainStackView.frame.maxY)*0.03
   }
   
   @IBAction func backPressed(_ sender: Any) {
