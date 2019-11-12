@@ -17,7 +17,6 @@
 		F758B71C235E03B200F16184 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F758B71A235E03B200F16184 /* LaunchScreen.storyboard */; };
 		F760CEFF236750DB00C72681 /* PokemonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F760CEFE236750DB00C72681 /* PokemonCollectionViewCell.swift */; };
 		F790689B237195A600B87DDB /* PresentingAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F790689A237195A600B87DDB /* PresentingAnimator.swift */; };
-		F790689D237195FE00B87DDB /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F790689C237195FE00B87DDB /* AnimationHelper.swift */; };
 		F79068A1237448A600B87DDB /* DismissingAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79068A0237448A600B87DDB /* DismissingAnimator.swift */; };
 		F79068A323754CDA00B87DDB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79068A223754CDA00B87DDB /* SceneDelegate.swift */; };
 		F7F39513236C4CA9005BC0D1 /* PokemonDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F39512236C4CA9005BC0D1 /* PokemonDetailModel.swift */; };
@@ -38,7 +37,6 @@
 		F758B71D235E03B200F16184 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F760CEFE236750DB00C72681 /* PokemonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCollectionViewCell.swift; sourceTree = "<group>"; };
 		F790689A237195A600B87DDB /* PresentingAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentingAnimator.swift; sourceTree = "<group>"; };
-		F790689C237195FE00B87DDB /* AnimationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
 		F79068A0237448A600B87DDB /* DismissingAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissingAnimator.swift; sourceTree = "<group>"; };
 		F79068A223754CDA00B87DDB /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		F7F39512236C4CA9005BC0D1 /* PokemonDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailModel.swift; sourceTree = "<group>"; };
@@ -98,7 +96,6 @@
 				F758B713235E03B100F16184 /* HomeVC.swift */,
 				F790689A237195A600B87DDB /* PresentingAnimator.swift */,
 				F79068A0237448A600B87DDB /* DismissingAnimator.swift */,
-				F790689C237195FE00B87DDB /* AnimationHelper.swift */,
 				F79068A223754CDA00B87DDB /* SceneDelegate.swift */,
 				F758B715235E03B100F16184 /* Main.storyboard */,
 				F72100C0236C463500FABBEC /* DetailsVC.swift */,
@@ -234,7 +231,6 @@
 				F758B710235E03B100F16184 /* AppDelegate.swift in Sources */,
 				F79068A323754CDA00B87DDB /* SceneDelegate.swift in Sources */,
 				F72100C1236C463500FABBEC /* DetailsVC.swift in Sources */,
-				F790689D237195FE00B87DDB /* AnimationHelper.swift in Sources */,
 				F760CEFF236750DB00C72681 /* PokemonCollectionViewCell.swift in Sources */,
 				F790689B237195A600B87DDB /* PresentingAnimator.swift in Sources */,
 			);

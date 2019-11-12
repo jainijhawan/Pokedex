@@ -14,7 +14,7 @@ UIViewControllerAnimatedTransitioning {
   
   private let originFrame = CGRect.zero
   var mySelectedIndex: IndexPath?
-  var x: CGRect?
+ 
   
   func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
     return 1.0
@@ -25,39 +25,63 @@ UIViewControllerAnimatedTransitioning {
     let fromVC = transitionContext.viewController(forKey: .from) as! HomeVC
     let toVC = transitionContext.viewController(forKey: .to) as! DetailsVC
     
-    let blurEffect = UIBlurEffect(style: .light)
-    let blurEffectView = UIVisualEffectView(effect: blurEffect)
-    
-    blurEffectView.frame = fromVC.view.frame
-    transitionContext.containerView.addSubview(blurEffectView)
     mySelectedIndex = fromVC.selectedIndex!
     
+    print(toVC.middleStackView.frame)
+    
     let selectedCell = fromVC.pokeCollectionView.cellForItem(at: mySelectedIndex!) as! PokemonCollectionViewCell
-    let selectedCellCopy = selectedCell.pokemonImage.snapshotView(afterScreenUpdates: true)
     
-    transitionContext.containerView.addSubview(selectedCellCopy!)
-        
-    x = fromVC.pokeCollectionView.convert(selectedCell.frame, to: fromVC.view)
+    let selectedCellImageCopy = selectedCell.pokemonImage.snapshotView(afterScreenUpdates: true)
+    let selectedCellNameCopy = selectedCell.nameLBL.snapshotView(afterScreenUpdates: true)
+    let selectedCellTypeCopy = selectedCell.type.snapshotView(afterScreenUpdates: true)
     
-    selectedCellCopy?.frame = CGRect(x: x!.minX, y: x!.minY, width: selectedCell.pokemonImage.frame.width, height: selectedCell.pokemonImage.frame.height)
+    let absoluteCellFrame = fromVC.pokeCollectionView.convert(selectedCell.frame, to: fromVC.view)
+    let absoluteCellNameFrame = fromVC.pokeCollectionView.cellForItem(at: mySelectedIndex!)?.convert(selectedCell.nameLBL.frame, to: fromVC.view)
+    let absoluteCellTypeFrame = fromVC.pokeCollectionView.cellForItem(at: mySelectedIndex!)?.convert(selectedCell.type.frame, to: fromVC.view)
     
-    toVC.view.isHidden = true
+    let finalImageCenter = toVC.imageStackView.convert(toVC.pokemonImage.center, to: toVC.view)
+    let finalNameCenter = toVC.middleStackView.convert(toVC.name.center, to: toVC.view)
+    let finalTypeCenter = toVC.middleStackView.convert(toVC.type.center, to: toVC.view)
+    
+    let whiteView = UIView(frame: absoluteCellFrame)
+    whiteView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    whiteView.layer.cornerRadius = 10.0
+    
+    selectedCellImageCopy?.frame = CGRect(x: absoluteCellFrame.minX, y: absoluteCellFrame.minY, width: selectedCell.pokemonImage.frame.width, height: selectedCell.pokemonImage.frame.height)
+    selectedCellNameCopy?.frame = absoluteCellNameFrame!
+    selectedCellTypeCopy?.frame = absoluteCellTypeFrame!
+    
+    toVC.view.alpha = 0
+    
+    transitionContext.containerView.addSubview(whiteView)
+    transitionContext.containerView.addSubview(selectedCellImageCopy!)
+    transitionContext.containerView.addSubview(selectedCellNameCopy!)
+    transitionContext.containerView.addSubview(selectedCellTypeCopy!)
     transitionContext.containerView.addSubview(toVC.view)
     
-    let y = toVC.imageStackView.convert(toVC.pokemonImage.frame, to: toVC.view)
     
-    let scaleFactor = toVC.pokemonImage.frame.width/(selectedCellCopy?.frame.width)!
+    let scaleFactor = toVC.pokemonImage.frame.width/(selectedCellImageCopy?.frame.width)!
     
-    UIView.animate(withDuration: 0.8, animations: {
-      selectedCellCopy?.center = CGPoint(x: y.midX, y: y.midY)
-      selectedCellCopy?.transform = CGAffineTransform(scaleX: scaleFactor, y: scaleFactor)
+    UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 2.5, options: .curveEaseInOut, animations: {
+      selectedCellImageCopy?.center = finalImageCenter
+      selectedCellImageCopy?.transform = CGAffineTransform(scaleX: scaleFactor, y: scaleFactor)
+      
+      selectedCellNameCopy?.center = finalNameCenter
+      selectedCellTypeCopy?.center = finalTypeCenter
+      whiteView.frame = fromVC.view.frame
     }) { (_) in
-      selectedCellCopy?.removeFromSuperview()
-      toVC.view.isHidden = false
-      transitionContext.completeTransition(true)
-
+      UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+        toVC.view.alpha = 1
+      }) { (_) in
+        selectedCellImageCopy?.removeFromSuperview()
+        selectedCellNameCopy?.removeFromSuperview()
+        selectedCellTypeCopy?.removeFromSuperview()
+        
+        whiteView.removeFromSuperview()
       }
+      transitionContext.completeTransition(true)
     }
+  }
   
   
 }
@@ -66,12 +90,12 @@ extension PresentingAnimator: UIViewControllerTransitioningDelegate {
     return self
   }
   
-  func animationController(forDismissed dismissed: UIViewController)
-    -> UIViewControllerAnimatedTransitioning? {
-
-      guard let _ = dismissed as? DetailsVC   else {
-        return nil
-      }
-      return DismissingAnimator(originFrame: x!)
-  }
+    func animationController(forDismissed dismissed: UIViewController)
+      -> UIViewControllerAnimatedTransitioning? {
+  
+        guard let _ = dismissed as? DetailsVC   else {
+          return nil
+        }
+        return DismissingAnimator(originFrame: x!)
+    }
 }

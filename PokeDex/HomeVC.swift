@@ -139,6 +139,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource,UICollect
       pokemon.heightData = tuppleObj.height
       pokemon.weightData = tuppleObj.weight
       pokemon.typeData = tuppleObj.type
+      pokemon.weaknessData = tuppleObj.weakness
       detailsVC.pokemonDetail = pokemon
       for i in 0..<tuple.count {
         if tuple[indexPath.row].next_evolution?.count == 2 {
@@ -194,6 +195,7 @@ extension HomeVC: UIViewControllerPreviewingDelegate {
       pokemon.heightData = tuppleObj.height
       pokemon.weightData = tuppleObj.weight
       pokemon.imageURL = tuppleObj.image
+      pokemon.weaknessData = tuppleObj.weakness
       detailsVC.pokemonDetail = pokemon
       
       for i in 0..<tuple.count {

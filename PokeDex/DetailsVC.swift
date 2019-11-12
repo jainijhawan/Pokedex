@@ -29,27 +29,30 @@ class DetailsVC: UIViewController {
   @IBOutlet weak var imageStackView: UIStackView!
   @IBOutlet weak var middleStackView: UIStackView!
   
+  var xyz:CGPoint?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view.
     name.text = pokemonDetail.nameData
-     type.text = pokemonDetail.typeData
-     pokemonImage.kf.setImage(with: pokemonDetail.imageURL)
-     weakness.text = pokemonDetail.weaknessData
-     height.text = pokemonDetail.heightData
-     weight.text = pokemonDetail.weightData
-     EV1.kf.setImage(with: pokemonDetail.ev1)
-     EV2.kf.setImage(with: pokemonDetail.ev2)
-     nextEVLabel.text = pokemonDetail.nextEVLabelText
-     ev1Label.text = pokemonDetail.ev1Name
-     ev2Label.text = pokemonDetail.ev2Name
-     mainStackView.spacing = (self.view.frame.height - mainStackView.frame.maxY)*0.4
-    upperStackView.spacing = (self.view.frame.height - mainStackView.frame.maxY)*0.1
-    middleStackView.spacing = (self.view.frame.height - mainStackView.frame.maxY)*0.03
+    type.text = pokemonDetail.typeData
+    pokemonImage.kf.setImage(with: pokemonDetail.imageURL)
+    weakness.text = pokemonDetail.weaknessData
+    height.text = pokemonDetail.heightData
+    weight.text = pokemonDetail.weightData
+    EV1.kf.setImage(with: pokemonDetail.ev1)
+    EV2.kf.setImage(with: pokemonDetail.ev2)
+    nextEVLabel.text = pokemonDetail.nextEVLabelText
+    ev1Label.text = pokemonDetail.ev1Name
+    ev2Label.text = pokemonDetail.ev2Name
+    mainStackView.spacing = (self.view.frame.height - mainStackView.frame.maxY)*0.4
+   // upperStackView.spacing = (self.view.frame.height - mainStackView.frame.maxY)*0.1
+//    middleStackView.spacing = (self.view.frame.height - mainStackView.frame.maxY)*0.03
   }
   
   @IBAction func backPressed(_ sender: Any) {
     self.dismiss(animated: true, completion: nil)
+    print(middleStackView.frame)
   }
   
 }
