@@ -117,6 +117,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource,UICollect
     
     if let collection = self.pokeCollectionView{
       let width = (collection.bounds.width - totalSpacing)/numberOfItemsPerRow
+      print(width)
       return CGSize(width: width, height: width + 100)
     } else {
       return CGSize(width: 0, height: 0)
@@ -133,10 +134,11 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource,UICollect
 
       let tuppleObj = tuple[indexPath.row]
       var pokemon = Pokemon(name: tuppleObj.name)
-      pokemon.typeData = tuppleObj.type
-      pokemon.heightData = tuppleObj.height
       pokemon.imageURL = tuppleObj.image
+      print()
+      pokemon.heightData = tuppleObj.height
       pokemon.weightData = tuppleObj.weight
+      pokemon.typeData = tuppleObj.type
       detailsVC.pokemonDetail = pokemon
       for i in 0..<tuple.count {
         if tuple[indexPath.row].next_evolution?.count == 2 {

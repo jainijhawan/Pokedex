@@ -26,8 +26,8 @@ class DetailsVC: UIViewController {
   @IBOutlet weak var ev2Label: UILabel!
   @IBOutlet weak var mainStackView: UIStackView!
   @IBOutlet weak var upperStackView: UIStackView!
+  @IBOutlet weak var imageStackView: UIStackView!
   @IBOutlet weak var middleStackView: UIStackView!
-  @IBOutlet weak var mainImageWidth: NSLayoutConstraint!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -41,7 +41,6 @@ class DetailsVC: UIViewController {
      EV1.kf.setImage(with: pokemonDetail.ev1)
      EV2.kf.setImage(with: pokemonDetail.ev2)
      nextEVLabel.text = pokemonDetail.nextEVLabelText
-     mainImageWidth.constant = self.view.frame.width*0.5
      ev1Label.text = pokemonDetail.ev1Name
      ev2Label.text = pokemonDetail.ev2Name
      mainStackView.spacing = (self.view.frame.height - mainStackView.frame.maxY)*0.4
