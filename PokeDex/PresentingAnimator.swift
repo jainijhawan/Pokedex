@@ -14,7 +14,10 @@ UIViewControllerAnimatedTransitioning {
   
   private let originFrame = CGRect.zero
   var mySelectedIndex: IndexPath?
- 
+  var previousCellFrame: CGRect?
+  var previousImageFrame: CGRect?
+  var previousNameFrame: CGRect?
+  var previousTypeFrame: CGRect?
   
   func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
     return 1.0
@@ -27,8 +30,6 @@ UIViewControllerAnimatedTransitioning {
     
     mySelectedIndex = fromVC.selectedIndex!
     
-    print(toVC.middleStackView.frame)
-    
     let selectedCell = fromVC.pokeCollectionView.cellForItem(at: mySelectedIndex!) as! PokemonCollectionViewCell
     
     let selectedCellImageCopy = selectedCell.pokemonImage.snapshotView(afterScreenUpdates: true)
@@ -36,8 +37,13 @@ UIViewControllerAnimatedTransitioning {
     let selectedCellTypeCopy = selectedCell.type.snapshotView(afterScreenUpdates: true)
     
     let absoluteCellFrame = fromVC.pokeCollectionView.convert(selectedCell.frame, to: fromVC.view)
+    previousCellFrame = absoluteCellFrame
+    
     let absoluteCellNameFrame = fromVC.pokeCollectionView.cellForItem(at: mySelectedIndex!)?.convert(selectedCell.nameLBL.frame, to: fromVC.view)
+    previousNameFrame = absoluteCellNameFrame
+    
     let absoluteCellTypeFrame = fromVC.pokeCollectionView.cellForItem(at: mySelectedIndex!)?.convert(selectedCell.type.frame, to: fromVC.view)
+    previousTypeFrame = absoluteCellTypeFrame
     
     let finalImageCenter = toVC.imageStackView.convert(toVC.pokemonImage.center, to: toVC.view)
     let finalNameCenter = toVC.middleStackView.convert(toVC.name.center, to: toVC.view)
@@ -48,6 +54,8 @@ UIViewControllerAnimatedTransitioning {
     whiteView.layer.cornerRadius = 10.0
     
     selectedCellImageCopy?.frame = CGRect(x: absoluteCellFrame.minX, y: absoluteCellFrame.minY, width: selectedCell.pokemonImage.frame.width, height: selectedCell.pokemonImage.frame.height)
+    previousImageFrame = selectedCellImageCopy?.frame
+    
     selectedCellNameCopy?.frame = absoluteCellNameFrame!
     selectedCellTypeCopy?.frame = absoluteCellTypeFrame!
     
@@ -62,7 +70,7 @@ UIViewControllerAnimatedTransitioning {
     
     let scaleFactor = toVC.pokemonImage.frame.width/(selectedCellImageCopy?.frame.width)!
     
-    UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 2.5, options: .curveEaseInOut, animations: {
+    UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 2.5, options: .curveEaseInOut, animations: {
       selectedCellImageCopy?.center = finalImageCenter
       selectedCellImageCopy?.transform = CGAffineTransform(scaleX: scaleFactor, y: scaleFactor)
       
@@ -90,12 +98,12 @@ extension PresentingAnimator: UIViewControllerTransitioningDelegate {
     return self
   }
   
-//    func animationController(forDismissed dismissed: UIViewController)
-//      -> UIViewControllerAnimatedTransitioning? {
-//
-//        guard let _ = dismissed as? DetailsVC   else {
-//          return nil
-//        }
-//        return DismissingAnimator(originFrame: x!)
-//    }
+  func animationController(forDismissed dismissed: UIViewController)
+    -> UIViewControllerAnimatedTransitioning? {
+      
+      guard let _ = dismissed as? DetailsVC   else {
+        return nil
+      }
+      return DismissingAnimator(previousCellFrame: previousCellFrame!, previousNameFrame: previousNameFrame!, previousTypeFrame: previousTypeFrame!, previousImageFrame: previousImageFrame!)
+  }
 }

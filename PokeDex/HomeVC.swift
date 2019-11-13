@@ -135,7 +135,6 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource,UICollect
       let tuppleObj = tuple[indexPath.row]
       var pokemon = Pokemon(name: tuppleObj.name)
       pokemon.imageURL = tuppleObj.image
-      print()
       pokemon.heightData = tuppleObj.height
       pokemon.weightData = tuppleObj.weight
       pokemon.typeData = tuppleObj.type
