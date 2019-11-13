@@ -92,21 +92,45 @@
 		F758B70E235E03B100F16184 /* PokeDex */ = {
 			isa = PBXGroup;
 			children = (
-				F758B70F235E03B100F16184 /* AppDelegate.swift */,
-				F758B713235E03B100F16184 /* HomeVC.swift */,
-				F790689A237195A600B87DDB /* PresentingAnimator.swift */,
-				F79068A0237448A600B87DDB /* DismissingAnimator.swift */,
-				F79068A223754CDA00B87DDB /* SceneDelegate.swift */,
-				F758B715235E03B100F16184 /* Main.storyboard */,
-				F72100C0236C463500FABBEC /* DetailsVC.swift */,
-				F7F39512236C4CA9005BC0D1 /* PokemonDetailModel.swift */,
-				F760CEFE236750DB00C72681 /* PokemonCollectionViewCell.swift */,
-				F7524B8B2366FD7900421C3B /* DataModel.swift */,
-				F758B718235E03B200F16184 /* Assets.xcassets */,
-				F758B71A235E03B200F16184 /* LaunchScreen.storyboard */,
+				F76BCB76237C07AD00C25195 /* Model */,
+				F76BCB77237C07CC00C25195 /* View */,
+				F76BCB78237C07E500C25195 /* Controller */,
 				F758B71D235E03B200F16184 /* Info.plist */,
 			);
 			path = PokeDex;
+			sourceTree = "<group>";
+		};
+		F76BCB76237C07AD00C25195 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F7524B8B2366FD7900421C3B /* DataModel.swift */,
+				F7F39512236C4CA9005BC0D1 /* PokemonDetailModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F76BCB77237C07CC00C25195 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F790689A237195A600B87DDB /* PresentingAnimator.swift */,
+				F79068A0237448A600B87DDB /* DismissingAnimator.swift */,
+				F760CEFE236750DB00C72681 /* PokemonCollectionViewCell.swift */,
+				F79068A223754CDA00B87DDB /* SceneDelegate.swift */,
+				F758B715235E03B100F16184 /* Main.storyboard */,
+				F758B71A235E03B200F16184 /* LaunchScreen.storyboard */,
+				F758B718235E03B200F16184 /* Assets.xcassets */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F76BCB78237C07E500C25195 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F758B70F235E03B100F16184 /* AppDelegate.swift */,
+				F758B713235E03B100F16184 /* HomeVC.swift */,
+				F72100C0236C463500FABBEC /* DetailsVC.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
