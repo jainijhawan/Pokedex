@@ -90,12 +90,12 @@ extension PresentingAnimator: UIViewControllerTransitioningDelegate {
     return self
   }
   
-    func animationController(forDismissed dismissed: UIViewController)
-      -> UIViewControllerAnimatedTransitioning? {
-  
-        guard let _ = dismissed as? DetailsVC   else {
-          return nil
-        }
-        return DismissingAnimator(originFrame: x!)
-    }
+//    func animationController(forDismissed dismissed: UIViewController)
+//      -> UIViewControllerAnimatedTransitioning? {
+//
+//        guard let _ = dismissed as? DetailsVC   else {
+//          return nil
+//        }
+//        return DismissingAnimator(originFrame: x!)
+//    }
 }

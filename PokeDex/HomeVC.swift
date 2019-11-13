@@ -171,6 +171,20 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource,UICollect
       
     }
   }
+  
+  func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+    let cell = pokeCollectionView.cellForItem(at: indexPath)
+    UIView.animate(withDuration: 0.3) {
+            cell!.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+    }
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+    let cell = pokeCollectionView.cellForItem(at: indexPath)
+    UIView.animate(withDuration: 0.5) {
+      cell!.transform = .identity
+    }
+  }
 }
 
 
