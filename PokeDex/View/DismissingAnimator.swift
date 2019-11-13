@@ -34,7 +34,9 @@ class DismissingAnimator: NSObject,UIViewControllerAnimatedTransitioning {
     let fromVC = transitionContext.viewController(forKey: .from) as! DetailsVC
     let toVC = transitionContext.viewController(forKey: .to) as! HomeVC
     let containerView = transitionContext.containerView
-
+    
+    let selectedCell = toVC.pokeCollectionView.cellForItem(at: toVC.selectedIndex!)
+    selectedCell?.isHidden = true
     let imageSnapshot = fromVC.pokemonImage.snapshotView(afterScreenUpdates: true)
     imageSnapshot?.frame = fromVC.imageStackView.convert(fromVC.pokemonImage.frame,
                                                          to: fromVC.view)
@@ -60,7 +62,7 @@ class DismissingAnimator: NSObject,UIViewControllerAnimatedTransitioning {
     containerView.addSubview(nameSnapshot!)
     fromVC.view.isHidden = true
     
-    UIView.animate(withDuration: 0.5, animations: {
+    UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.7, options: .curveEaseInOut, animations: {
       imageSnapshot?.center = CGPoint(x: self.previousImageFrame.midX,
                                       y: self.previousImageFrame.midY)
       imageSnapshot?.transform = CGAffineTransform(scaleX: scaleFactor,
@@ -71,16 +73,22 @@ class DismissingAnimator: NSObject,UIViewControllerAnimatedTransitioning {
                                      y: self.previousTypeFrame.midY)
       
       whiteView.frame = self.previousCellFrame
-
     }) { (_) in
-      transitionContext.completeTransition(true)
-
-      imageSnapshot?.removeFromSuperview()
-      nameSnapshot?.removeFromSuperview()
-      typeSnapshot?.removeFromSuperview()
-      whiteView.removeFromSuperview()
-
+       transitionContext.completeTransition(true)
+      selectedCell?.isHidden = false
+           imageSnapshot?.removeFromSuperview()
+           nameSnapshot?.removeFromSuperview()
+           typeSnapshot?.removeFromSuperview()
+           whiteView.removeFromSuperview()
     }
+    
+//    UIView.animate(withDuration: 0.5, animations: {
+//
+//
+//    }) { (_) in
+//
+//
+//    }
     
   }
   

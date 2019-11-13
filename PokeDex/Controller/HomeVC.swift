@@ -169,7 +169,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource,UICollect
         detailsVC.pokemonDetail.nextEVLabelText = "No More Evoution"
       }
       UIView.animate(withDuration: 1) {
-        self.present(detailsVC, animated: true, completion: nil)
+       self.present(detailsVC, animated: true, completion: nil)
       }
       
     }
@@ -252,8 +252,5 @@ extension HomeVC: UIViewControllerPreviewingDelegate {
   func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
     show(viewControllerToCommit, sender: self)
   }
-  
-  func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-    .none
-  }
+ 
 }

@@ -77,13 +77,13 @@ UIViewControllerAnimatedTransitioning {
     
     let scaleFactor = toVC.pokemonImage.frame.width/(selectedCellImageCopy?.frame.width)!
     
-    UIView.animate(withDuration: 0.7,
+    UIView.animate(withDuration: 0.6,
                    delay: 0,
                    usingSpringWithDamping: 0.7,
                    initialSpringVelocity: 2.5,
                    options: .curveEaseInOut,
                    animations: {
-                    
+
       selectedCellImageCopy?.center = finalImageCenter
       selectedCellImageCopy?.transform = CGAffineTransform(scaleX: scaleFactor,
                                                            y: scaleFactor)
@@ -92,20 +92,23 @@ UIViewControllerAnimatedTransitioning {
       selectedCellTypeCopy?.center = finalTypeCenter
       whiteView.frame = fromVC.view.frame
     }) { (_) in
-      UIView.animate(withDuration: 0.1,
-                     delay: 0,
-                     options: .curveEaseInOut,
-                     animations: {
-        toVC.view.alpha = 1
-      }) { (_) in
-        selectedCellImageCopy?.removeFromSuperview()
-        selectedCellNameCopy?.removeFromSuperview()
-        selectedCellTypeCopy?.removeFromSuperview()
-        
-        whiteView.removeFromSuperview()
+    
+      UIView.animate(withDuration: 0.2,
+                       delay: 0,
+                       options: .curveEaseInOut,
+                       animations: {
+          toVC.view.alpha = 1
+        }) { (_) in
+          selectedCellImageCopy?.removeFromSuperview()
+          selectedCellNameCopy?.removeFromSuperview()
+          selectedCellTypeCopy?.removeFromSuperview()
+          
+          whiteView.removeFromSuperview()
+        }
+        transitionContext.completeTransition(true)
       }
-      transitionContext.completeTransition(true)
-    }
+
+    
   }
   
   
